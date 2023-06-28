@@ -1,0 +1,254 @@
+version: "3.1"
+nlu:
+
+- intent: saludo
+  examples: |
+    - ¡Hola!
+    - Hola
+    - Hola, ¿cómo estás?
+    - Buen día
+    - Buenos días
+    - ¿Qué tal?
+    - Saludos
+    - ¿Cómo te va?
+    - ¿Cómo estás?
+    - Hola, ¿en qué puedo ayudarte?
+    - Buenas tardes
+    - Buenas noches
+
+- intent: nombre
+  examples: |
+    - Mi nombre es [Carlos](nombre_usuario)
+    - Soy [Ana](nombre_usuario)
+    - Me llamo [Javier](nombre_usuario)
+    - [Marta](nombre_usuario) es mi nombre
+    - Puedes llamarme [Pedro](nombre_usuario)
+    - Soy [Sofía](nombre_usuario) [Pérez](nombre_usuario)
+    - Me llamo [Luis](nombre_usuario) [Martínez](nombre_usuario)
+    - [María](nombre_usuario) [González](nombre_usuario) es mi nombre
+    - Puedes llamarme [Andrés](nombre_usuario) [Fernández](nombre_usuario)
+    - [Pablo](nombre_usuario) es [Pablo](nombre_usuario)
+    - Me conocen como [Eduardo](nombre_usuario)
+    - Mis amigos me llaman [Diana](nombre_usuario)
+    - [Ricardo](nombre_usuario) [López](nombre_usuario), ese es mi nombre
+    - Soy conocido como [Carmen](nombre_usuario) [Ramírez](nombre_usuario)
+    - No soy otro que [Raúl](nombre_usuario)
+    - Soy [Teresa](nombre_usuario) y nada más
+    - Mi nombre completo es [Rodrigo](nombre_usuario) [García](nombre_usuario)
+    - Llámame [Sergio](nombre_usuario), por favor
+    - Mi nombre, [Manuel](nombre_usuario)
+    - La gente me conoce como [Gabriela](nombre_usuario) [Ruiz](nombre_usuario)
+    - [Alejandro](nombre_usuario) es mi nombre de pila
+    - Soy [Isabel](nombre_usuario) [Torres](nombre_usuario)
+    - Me llamo [Fernando](nombre_usuario), pero puedes decirme [Fer](nombre_usuario)
+    - [Laura](nombre_usuario) [González](nombre_usuario), ese es mi nombre completo
+    - Puedes llamarme [Rosa](nombre_usuario) [López](nombre_usuario)
+
+- intent: estado_acompanamiento
+  examples: |
+    - Estoy solo
+    - solo
+    - Estoy acompañado
+    - Estoy sola
+    - sola
+    - Estoy acompañada
+    - No hay nadie más conmigo
+    - Solo soy yo
+    - Soy el único presente
+    - Me encuentro solo en este momento
+    - Aquí estoy solo
+    - Nadie más está conmigo
+    - Estoy solo en casa
+    - Me encuentro acompañado
+    - Hay otras personas conmigo
+    - Estamos juntos
+    - Aquí hay más gente
+    - No estoy solo
+    - No estoy sola
+    - Somos un grupo
+    - Hay más personas aquí
+    - Tengo compañía
+    - No estoy desacompañado
+    - Tengo gente conmigo
+    - No estoy desacompañada
+    - Estoy con otras personas
+    - Estoy con mi familia
+    - Estoy con mis amigos
+    - Estoy en compañía
+    - Tenemos un grupo aquí
+    - Estamos en grupo
+    - Estamos todos juntos
+    - Estoy con un grupo
+
+- intent: prioridad_alta
+  examples: |
+    - estable
+    - grave
+    - estado estable
+    - estado grave
+    - en condición estable
+    - en condición grave
+    - situación estable
+    - situación grave
+    - paciente en estado estable
+    - paciente en estado grave
+    - persona en condición estable
+    - persona en condición grave
+    - estado de salud estable
+    - estado de salud grave
+    - persona con condición estable
+    - persona con condición grave
+    - me encuentro grave
+    - en estado crítico
+    - en estado regular
+    - paciente en estado crítico
+    - paciente en estado regular
+    - persona en condición crítica
+    - persona en condición regular
+    - estado de salud crítico
+    - estado de salud regular
+    - persona con condición crítica
+    - persona con condición regular
+    - me encuentro en estado crítico
+    - me encuentro en estado regular
+
+- intent: ubicacion
+  examples: |
+    - Estoy en el edificio A, piso 2
+    - Me encuentro en el edificio C, salón 202
+    - Estoy en el piso 3 del edificio B
+    - Me encuentro en el edificio D, en el piso 1
+    - Estoy en el salón 101 del edificio A
+    - Estoy en el edificio B, piso 1
+    - Me encuentro en el edificio C
+    - Estoy en la biblioteca del edificio D
+    - Me encuentro en la cafetería del edificio B
+    - Estoy en el salón de conferencias del edificio A
+    - Estoy en el edificio C, en la sala de reuniones
+    - Me encuentro en la cafetería del piso 2 del edificio B
+    - Estoy en la biblioteca del edificio A, en el sótano
+    - Estoy en el edificio D, en el aula de informática
+    - Me encuentro en la cafetería principal
+    - Estoy en la biblioteca central
+    - Estoy en el edificio B, en la sala de estudio
+    - Me encuentro en la cafetería del edificio C, en el segundo piso
+    - Estoy en la biblioteca del edificio D, en el tercer piso
+    - Estoy en el edificio A, en la sala de conferencias 101
+
+- intent: estado_respiracion
+  examples: |
+    - [Bien](respiracion_estado) a pesar del sismo
+    - [Mal](respiracion_estado) con el polvo
+    - [Respiro](respiracion_estado) con dificultad
+    - [Pesada](respiracion_estado) mi respiración
+    - [Agitada](respiracion_estado) mi respiración
+    - [Entrecortada](respiracion_estado) desde el temblor
+    - [Superficial](respiracion_estado) por el miedo
+    - [Fuerte](respiracion_estado) a pesar del choque
+    - [Normal](respiracion_estado) después del accidente
+    - [Rápida](respiracion_estado) desde el sismo
+
+- intent: estado_circulacion
+  examples: |
+    - circulacion es baja
+    - baja
+    - irregular
+    - entumecidos
+    - entumecida
+    - Circulación parece [normal](circulacion_estado)
+    - Circulación [baja](circulacion_estado) tras terremoto
+    - Circulación [irregular](circulacion_estado)
+    - Circulación [buena](circulacion_estado)
+    - [Mareos](circulacion_estado) posiblemente circulación
+    - Manos [frías](circulacion_estado)
+    - Piernas [hinchadas](circulacion_estado)
+    - Venas parecen [hinchadas](circulacion_estado)
+    - Manos y pies [entumecidos](circulacion_estado)
+
+- intent: estado_neurologico
+  examples: |
+    - mareada
+    - mareado
+    - desorientado
+    - desorientada
+    - nauseas
+    - dolor de cabeza
+    - Me siento [bien](neurologico_estado)
+    - [Mareos](neurologico_estado) después del sismo
+    - [Dolores de cabeza](neurologico_estado)
+    - [Confusión](neurologico_estado) tras temblor
+    - [Desorientado](neurologico_estado) desde terremoto
+    - Memoria parece [buena](neurologico_estado)
+    - [Problemas para concentrarme](neurologico_estado)
+    - [Desorientación](neurologico_estado) desde el temblor
+    - [Dificultad para recordar](neurologico_estado) cosas
+    - [Pesadillas](neurologico_estado) recurrentes
+
+- intent: ataque_panico
+  examples: |
+    - Me siento muy nervioso y tengo dificultad para respirar
+    - Siento un fuerte dolor en el pecho y me cuesta respirar
+    - Mi corazón está acelerado y tengo mareos
+    - Estoy temblando y siento un miedo intenso
+    - Me siento atrapado y no puedo salir de aquí
+    - Siento que me falta el aire y estoy sudando mucho
+    - Me siento mareado y con ganas de desmayarme
+
+- intent: evaluacion_primaria
+  examples: |
+    - evaluacion primaria
+    - realizar evaluación primaria
+    - quiero hacer la evaluación primaria
+    - iniciar evaluación primaria
+    - necesito la evaluación primaria
+    - ¿Podemos empezar con la evaluación primaria?
+
+- intent: info_datos_victima
+  examples: |
+    - Tengo 25 años y no tengo antecedentes médicos.
+    - Mi edad es 35 años y no tengo ninguna condición médica.
+    - Soy una persona de 40 años sin antecedentes médicos.
+    - Tengo 18 años y no tengo ningún problema de salud.
+    - Mi edad es 28 años y no tengo ninguna enfermedad crónica.
+    - Soy joven, tengo 22 años y no tengo antecedentes médicos.
+    - Tengo 30 años y no tengo ninguna condición preexistente.
+    - Tengo 45 años y soy una persona sana sin antecedentes médicos.
+    - Soy una persona de 50 años sin problemas de salud.
+    - Mi edad es 36 años y no tengo ningún problema médico.
+    - Tengo 27 años y no tengo antecedentes de enfermedades.
+    - Tengo 33 años y no tengo ninguna afección méd
+
+- intent: ayuda_llego
+  examples: |
+    - La ayuda ha llegado
+    - El cuerpo de emergencia está aquí
+    - Los paramédicos llegaron
+    - La ambulancia está en el lugar
+    - Han llegado los rescatistas
+    - Ya está aquí el equipo de emergencia
+    - La ayuda médica ha llegado
+    - Los bomberos están presentes
+    - Se encuentran en el lugar los socorristas
+    - La atención de emergencia ya está en marcha
+
+- intent: afirmativo
+  examples: |
+    - Sí
+    - Ok
+    - Claro
+    - Por supuesto
+    - Así es
+    - De acuerdo
+    - Correcto
+
+- intent: solicitar_contacto_emergencia
+  examples: |
+    - Mi contacto de emergencia es [nombre del contacto] con el número [número del contacto]
+    - Tengo un contacto de emergencia, su nombre es [nombre del contacto] y su número es [número del contacto]
+    - Necesito proporcionar un contacto de emergencia. El nombre es [nombre del contacto] y el número es [número del contacto]
+    - [nombre del contacto] es mi contacto de emergencia y su número es [número del contacto]
+    - En caso de emergencia, llamar a [nombre del contacto] al [número del contacto]
+    - [nombre del contacto] es la persona a contactar en caso de emergencia. Su número es [número del contacto]
+    - Por favor, guarda el nombre [nombre del contacto] y el número [número del contacto] como mi contacto de emergencia
+    - Anota el número [número del contacto] de [nombre del contacto] como mi contacto de emergencia
+    - [nombre del contacto] será mi contacto de emergencia. Su número de teléfono es [número del contacto]

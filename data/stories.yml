@@ -1,0 +1,15 @@
+version: "3.1"
+stories:
+############ Saludo inicial
+- story: Saludo inicial
+  steps:
+  - intent: saludo
+  - action: preguntar_nombre
+  - intent: nombre
+  - action: obtener_nombre
+  - intent: estado_acompanamiento
+  - action: estado_acompanamiento_action
+  - intent: prioridad_alta
+  - action: obtener_prioridad_alta
+  - intent: ubicacion
+  - action: identificar_peligros_entorno 

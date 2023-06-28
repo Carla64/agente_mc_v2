@@ -1,0 +1,27 @@
+# Archivos de compilación y ejecutables
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Archivos de configuración
+*.config
+.env
+
+# Directorios generados
+bin/
+obj/
+models/
+.rasa/cache
+
+# Dependencias y paquetes
+node_modules/
+vendor/
+
+# Archivos de registro y caché
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+debug.log

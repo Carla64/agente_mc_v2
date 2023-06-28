@@ -1,0 +1,91 @@
+#### This file contains tests to evaluate that your bot behaves as expected.
+#### If you want to learn more, please see the docs: https://rasa.com/docs/rasa/testing-your-assistant
+
+stories:
+- story: situacion estable con heridos sin defunciones 1
+  steps:
+  - user: |
+      hello there!
+    intent: saludo
+  - action: saludo_respuesta
+  - user: |
+      amazing
+    intent: estado_estable
+  - action: utter_happy
+
+- story: situacion estable con heridos sin defunciones 2
+  steps:
+  - user: |
+      hello there!
+    intent: saludo
+  - action: saludo_respuesta
+  - user: |
+      amazing
+    intent: estado_estable
+  - action: utter_happy
+  - user: |
+      bye-bye!
+    intent: despedida
+  - action: despedida_respuesta
+
+- story: sad path 1
+  steps:
+  - user: |
+      hello
+    intent: saludo
+  - action: saludo_respuesta
+  - user: |
+      not good
+    intent: mood_unhappy
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - user: |
+      yes
+    intent: afirmacion
+  - action: utter_happy
+
+- story: sad path 2
+  steps:
+  - user: |
+      hello
+    intent: saludo
+  - action: saludo_respuesta
+  - user: |
+      not good
+    intent: mood_unhappy
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - user: |
+      not really
+    intent: negacion
+  - action: despedida_respuesta
+
+- story: sad path 3
+  steps:
+  - user: |
+      hi
+    intent: saludo
+  - action: saludo_respuesta
+  - user: |
+      very terrible
+    intent: mood_unhappy
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - user: |
+      no
+    intent: negacion
+  - action: despedida_respuesta
+
+- story: say despedida
+  steps:
+  - user: |
+      bye-bye!
+    intent: despedida
+  - action: despedida_respuesta
+
+- story: bot challenge
+  steps:
+  - user: |
+      are you a bot?
+    intent: bot_challenge
+  - action: utter_iamabot

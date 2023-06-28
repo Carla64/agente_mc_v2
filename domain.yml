@@ -1,0 +1,120 @@
+version: "3.1"
+
+intents:
+  - saludo
+  - nombre
+  - estado_acompanamiento
+  - prioridad_alta
+  - ubicacion
+  - estado_respiracion
+  - estado_circulacion
+  - estado_neurologico
+  - ataque_panico
+  - info_datos_victima
+  - recursos_adicionales
+  - contacto_emergencia
+  - evaluacion_primaria
+  - seguimiento_atencion
+  - ayuda_llego
+  - afirmativo
+  - solicitar_contacto_emergencia
+
+entities:
+- nombre_usuario
+- tipo_persona
+- prioridad_alta
+- ubicacion
+- respiracion_estado
+- circulacion_estado
+- neurologico_estado
+- estado_general
+- edad
+- antecedentes
+- recursos_adicionales
+- contacto_emergencia
+
+slots:
+  slot_nombre_usuario:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: nombre_usuario
+  slot_tipo_persona:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: tipo_persona
+  slot_prioridad_alta:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: prioridad_alta
+  slot_ubicacion:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: ubicacion
+  slot_respiracion_estado:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: respiracion_estado
+  slot_circulacion_estado:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: circulacion_estado
+  slot_neurologico_estado:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: neurologico_estado
+  slot_estado_general:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: estado_general
+  slot_edad:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: edad
+  slot_antecedentes:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: antecedentes
+  slot_recursos_adicionales:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: recursos_adicionales
+  slot_contacto_emergencia:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: contacto_emergencia
+        
+actions:
+  - preguntar_nombre
+  - obtener_nombre
+  - estado_acompanamiento_action
+  - obtener_prioridad_alta
+  - identificar_peligros_entorno
+  - evaluacion_primaria
+  - seguimiento
+  - seleccionar_prioridad_alta
+  - recopilar_estado_respiracion
+  - recopilar_estado_circulacion
+  - recopilar_estado_neurologico
+  - determinar_estado_general
+  - tranquilizar_apoyar
+  - identificar_posibilidad_shock
+  - proporcionar_instrucciones_shock
+  - recopilar_datos_victima
+  - datos_victima
+  - solicitar_recursos_adicionales
+  - recopilar_recursos_adicionales
+  - solicitar_contacto_emergencia
+  - accion_informar_contacto_emergencia
+  - despedida_respuesta
