@@ -20,18 +20,20 @@ intents:
   - solicitar_contacto_emergencia
 
 entities:
-- nombre_usuario
-- tipo_persona
-- prioridad_alta
-- ubicacion
-- respiracion_estado
-- circulacion_estado
-- neurologico_estado
-- estado_general
-- edad
-- antecedentes
-- recursos_adicionales
-- contacto_emergencia
+  - nombre_usuario
+  - tipo_persona
+  - prioridad_alta
+  - ubicacion
+  - respiracion_estado
+  - circulacion_estado
+  - neurologico_estado
+  - estado_general
+  - edad
+  - antecedentes
+  - recursos_adicionales
+  - contacto_emergencia
+  - nombre_contacto
+  - numero
 
 slots:
   slot_nombre_usuario:
@@ -89,12 +91,17 @@ slots:
     mappings:
       - type: from_entity
         entity: recursos_adicionales
-  slot_contacto_emergencia:
+  nombre_contacto:
     type: text
     mappings:
       - type: from_entity
-        entity: contacto_emergencia
-        
+        entity: nombre_contacto
+  numero:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: numero
+
 actions:
   - preguntar_nombre
   - obtener_nombre

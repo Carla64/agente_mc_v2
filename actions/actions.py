@@ -3,6 +3,8 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet
 
+#Borrar la cache de rasa en caso que el modelo de entrenamiento no reconozca las entidades
+
 ############ Saludo inicial
 class SolicitarNombre(Action):
     def name(self) -> Text:
@@ -57,7 +59,7 @@ class ActionEstadoAcompanamiento(Action):
             ret = SlotSet("slot_tipo_persona", estado)
             dispatcher.utter_message(f"Entiendo, estás {estado}.")
             dispatcher.utter_message(f"Necesito confirmar tu estado. ¿Cómo lo describirías? ¿Grave o estable?")
-            dispatcher.utter_message("Ten en cuenta que hay más personas que estamos atendiendo.")
+            dispatcher.utter_message("Ten en cuenta que hay más personas que estamos atendiendo y debemos asignar prioridades.")
             return [ret]
         else:
             dispatcher.utter_message("Lo siento, no entendí eso. ¿Podrías decirme si estás solo o acompañado?")
@@ -185,11 +187,11 @@ class RecopilarEstadoRespiracion(Action):
         estado_respiracion = tracker.get_slot("slot_respiracion_estado")
         msg = tracker.latest_message.get('text').lower()
         if "bien" in msg or "bueno" in msg or "buena" in msg or "normal" in msg or "fuerte" in msg:
-            estado_respiracion = "Bien"
+            estado_respiracion = "Buena"
         elif "mal" in msg or "mala" in msg:
-            estado_respiracion = "Mal"
+            estado_respiracion = "Mala"
         elif "dificultad" in msg  or "rapida" in msg or "agitada" in msg:
-            estado_respiracion = "Dificultad"
+            estado_respiracion = "Dificil"
         elif "entrecortada" in msg:
             estado_respiracion = "Entrecortada"
         else:
@@ -197,11 +199,11 @@ class RecopilarEstadoRespiracion(Action):
 
         ret = SlotSet("slot_respiracion_estado", estado_respiracion)
         dispatcher.utter_message(f"Entiendo, tu estado respiracion es {estado_respiracion}.")
-        if estado_respiracion == "Bien":
+        if estado_respiracion == "Buena":
             dispatcher.utter_message("Me alegra saber que estás bien a pesar del sismo.")
-        elif estado_respiracion == "Mal":
+        elif estado_respiracion == "Mala":
             dispatcher.utter_message("Lamentablemente, el polvo puede afectar la respiración. Intenta buscar un lugar con aire más limpio e improvisa una mascarilla si es necesario.")
-        elif estado_respiracion == "Dificultad":
+        elif estado_respiracion == "Dificil":
             dispatcher.utter_message("Si tienes dificultad para respirar, intenta mantener la calma. Evita esfuerzos innecesarios.")
         elif estado_respiracion == "Entrecortada":
             dispatcher.utter_message("Si experimentas una respiración entrecortada, trata de mantener la calma. Evita esfuerzos innecesarios.")
@@ -242,6 +244,8 @@ class RecopilarEstadoNeurologico(Action):
             neurologico_estado = "Normal"
         elif "mareos" in msg or "mareada" in msg or "desorientado" in msg or "desorientada" in msg or "nauseas" in msg or "dolores" in msg:
             neurologico_estado = "Mala"
+        else: 
+            neurologico_estado = "Normal"
 
         ret = SlotSet("slot_neurologico_estado", neurologico_estado)
         dispatcher.utter_message(f"Entiendo, tu estado neurológico es {neurologico_estado}.")
@@ -275,13 +279,39 @@ class DeterminarEstadoGeneral(Action):
 
         if puntuacion >= 2:
             estado_general = "grave"
-            dispatcher.utter_message(text="Tu estado es grave. Busca atención médica inmediatamente.")
+            dispatcher.utter_message(text="De acuerdo a tus respuestas, se decidio darte prioridad.")
+            dispatcher.utter_message("La ayuda va en camino")
+            dispatcher.utter_message("...")
+            dispatcher.utter_message("...")
+            dispatcher.utter_message("...")
+            dispatcher.utter_message("Se le solicita reportar llegada del cuerpo de emergencia")
+            dispatcher.utter_message("...")
+            dispatcher.utter_message("...")
+            dispatcher.utter_message("...")
         elif puntuacion == 1:
             estado_general = "estable"
-            dispatcher.utter_message(text="Tu estado es estable. Continuaremos con el seguimiento de tu atención.")
+            dispatcher.utter_message(text="Tu estado es estable. Te informaremos las indicaciones del cuerpo de emergencia.")
+            dispatcher.utter_message("El cuerpo de Proteccion civil te ayudara a evacuar")
+            dispatcher.utter_message("...")
+            dispatcher.utter_message("...")
+            dispatcher.utter_message("...")
+            dispatcher.utter_message("Se le solicita reportar su llegada al cuerpo de emergencia")
+            dispatcher.utter_message("...")
+            dispatcher.utter_message("...")
+            dispatcher.utter_message("...")
         else:
             estado_general = "favorable"
-            dispatcher.utter_message(text="Tu estado es favorable. Asegúrate de seguir monitorizando tus signos vitales.")
+            dispatcher.utter_message(text="Tu estado es favorable.")
+            dispatcher.utter_message("El cuerpo de Proteccion civil te ayudara a evacuar")
+            dispatcher.utter_message("...")
+            dispatcher.utter_message("...")
+            dispatcher.utter_message("Por favor sigue sus instrucciones")
+            dispatcher.utter_message("...")
+            dispatcher.utter_message("...")
+            dispatcher.utter_message("Se le solicita reportar la llegada del cuerpo de proteccion civil")
+            dispatcher.utter_message("...")
+            dispatcher.utter_message("...")
+            dispatcher.utter_message("...")
 
         return [SlotSet("slot_estado_general", estado_general)]
 
@@ -363,6 +393,9 @@ class ProporcionarInstruccionesShock(Action):
 
 ############ Recopilación de información de la víctima
 
+import re
+from rasa_sdk.events import SlotSet
+
 class DatosVictima(Action):
     def name(self) -> Text:
         return "datos_victima"
@@ -370,20 +403,30 @@ class DatosVictima(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        edad = tracker.get_slot("slot_edad")
-        antecedentes = tracker.get_slot("slot_antecedentes")
 
-        if edad:
+        user_message = tracker.latest_message.get('text')
+
+        # Buscar la edad usando una expresión regular
+        edad_search = re.search(r"\b([1-9][0-9]?)\b", user_message)
+        if edad_search:
+            edad = edad_search.group(1)
             dispatcher.utter_message(text=f"Tienes {edad} años.")
         else:
             dispatcher.utter_message(text="No se detectó información sobre tu edad.")
+            edad = None
 
-        if antecedentes:
-            dispatcher.utter_message(text=f"Tienes los siguientes antecedentes médicos o condiciones: {antecedentes}")
+        # Buscar antecedentes usando palabras clave
+        antecedentes_keywords = ['diabetes', 'hipertension', 'asma', 'epilepsia', 'embarazada', 'tercera edad']  # Actualiza con tus propias palabras clave
+        antecedentes_found = [word for word in antecedentes_keywords if word in user_message]
+        if antecedentes_found:
+            antecedentes = ', '.join(antecedentes_found)
+            dispatcher.utter_message(text=f"Y me compartiste los antecedentes médicos o condiciones: {antecedentes}")
         else:
             dispatcher.utter_message(text="No se detectaron antecedentes médicos o condiciones.")
+            antecedentes = None
+
         dispatcher.utter_message(text="Por favor, proporciona un contacto de emergencia (número de teléfono y nombre)")
-        return []
+        return [SlotSet("slot_edad", edad), SlotSet("slot_antecedentes", antecedentes)]
 
 ############ Recursos adicionales y contacto de emergencia
 
@@ -414,6 +457,10 @@ class RecopilarRecursosAdicionales(Action):
             dispatcher.utter_message(text="Por favor, proporciona un contacto de emergencia (número de teléfono y nombre)")
         return []
 
+from rasa_sdk import Tracker
+from rasa_sdk.executor import CollectingDispatcher
+from rasa_sdk.events import SlotSet
+
 class InformarContactoEmergencia(Action):
     def name(self) -> Text:
         return "accion_informar_contacto_emergencia"
@@ -421,13 +468,30 @@ class InformarContactoEmergencia(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        contacto_emergencia = tracker.get_slot("slot_contacto_emergencia")
 
-        if contacto_emergencia:
-            dispatcher.utter_message(text="Mandando un reporte preventivo a tu contacto.")
+        # Obtén las entidades del mensaje más reciente
+        entities = tracker.latest_message.get('entities')
+
+        nombre_contacto = None
+        numero = None
+
+        # Busca las entidades 'nombre_contacto' y 'numero' en la lista de entidades
+        for entity in entities:
+            if entity['entity'] == 'nombre_contacto':
+                nombre_contacto = entity['value']
+            elif entity['entity'] == 'numero':
+                numero = entity['value']
+
+        if nombre_contacto and numero:
+            dispatcher.utter_message(text=f"Mandando un reporte preventivo a tu contacto {nombre_contacto} en el número {numero}.")
+            dispatcher.utter_message(text="Hemos terminado")
+            dispatcher.utter_message(text="Me autorizas compartir la informacion con el cuerpo de rescate?")
+            return [SlotSet("nombre_contacto", nombre_contacto), SlotSet("numero", numero)]
         else:
             dispatcher.utter_message(text="No se detectó información de contacto de emergencia.")
-        return []
+            dispatcher.utter_message(text="Hemos terminado")
+            dispatcher.utter_message(text="Me autorizas compartir la informacion con el cuerpo de rescate?")
+            return [SlotSet("nombre_contacto", None), SlotSet("numero", None)]
 
 ############ Despedida
 
@@ -438,15 +502,41 @@ class Despedida(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        slots = tracker.current_slot_values()
 
-        reporte = "Reporte de la conversación:\n"
-        for slot, value in slots.items():
-            reporte += f"- {slot}: {value}\n"
+        # Obtener los valores de los slots
+        nombre_usuario = tracker.get_slot('slot_nombre_usuario')
+        tipo_persona = tracker.get_slot('slot_tipo_persona')
+        prioridad_alta = tracker.get_slot('slot_prioridad_alta')
+        ubicacion = tracker.get_slot('slot_ubicacion')
+        respiracion_estado = tracker.get_slot('slot_respiracion_estado')
+        circulacion_estado = tracker.get_slot('slot_circulacion_estado')
+        neurologico_estado = tracker.get_slot('slot_neurologico_estado')
+        estado_general = tracker.get_slot('slot_estado_general')
+        edad = tracker.get_slot('slot_edad')
+        antecedentes = tracker.get_slot('slot_antecedentes')
+        nombre_contacto = tracker.get_slot('nombre_contacto')
+        numero = tracker.get_slot('numero')
+
+        # Crear el reporte
+        reporte = f"Gracias {nombre_usuario} por utilizar nuestro servicio de atención de emergencia. Aquí tienes un resumen de la información proporcionada:\n\n"
+
+        reporte += "Reporte de incidente \n"
+        reporte += f"- Tipo de persona: {tipo_persona}\n"
+        reporte += f"- Prioridad alta: {prioridad_alta}\n"
+        reporte += f"- Ubicación: {ubicacion}\n"
+        reporte += f"- Estado de la respiración: {respiracion_estado}\n"
+        reporte += f"- Estado de la circulación: {circulacion_estado}\n"
+        reporte += f"- Estado neurológico: {neurologico_estado}\n"
+        reporte += f"- Estado general: {estado_general}\n"
+        reporte += f"- Edad: {edad}\n"
+        reporte += f"- Antecedentes: {antecedentes}\n"
+
+        reporte += "\n Contacto de emergencia \n"
+        reporte += f"- Nombre del contacto de emergencia: {nombre_contacto}\n"
+        reporte += f"- Número del contacto de emergencia: {numero}\n"
 
         dispatcher.utter_message(text=reporte)
-        dispatcher.utter_message(text="Gracias por utilizar nuestro servicio de atención de emergencia.")
-        dispatcher.utter_message(text="Espero que te encuentres bien y que todo se solucione satisfactoriamente.")
+        dispatcher.utter_message(text="Esperamos que te encuentres bien y que todo se solucione satisfactoriamente.")
         dispatcher.utter_message(text="Si necesitas ayuda en el futuro, no dudes en contactarnos.")
         dispatcher.utter_message(text="¡Cuídate!")
         return []

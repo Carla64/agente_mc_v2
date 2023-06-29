@@ -1,70 +1,70 @@
 rules:
-- rule: Ejecutar accion para obtener_nombre
-  steps:
-  - intent: nombre
-  - action: obtener_nombre
+  - rule: Ejecutar accion para obtener_nombre
+    steps:
+      - intent: nombre
+      - action: obtener_nombre
 
-- rule: Ejecutar acción para estado_acompanamiento
-  steps:
-  - intent: estado_acompanamiento
-  - action: estado_acompanamiento_action
+  - rule: Ejecutar acción para estado_acompanamiento
+    steps:
+      - intent: estado_acompanamiento
+      - action: estado_acompanamiento_action
 
-- rule: Ejecutar accion para prioridad alta
-  steps:
-  - intent: prioridad_alta
-  - action: obtener_prioridad_alta
+  - rule: Ejecutar accion para prioridad alta
+    steps:
+      - intent: prioridad_alta
+      - action: obtener_prioridad_alta
 
-- rule: Ejecutar accion para identificar_peligros_entorno
-  steps:
-  - intent: ubicacion
-  - action: identificar_peligros_entorno
+  - rule: Ejecutar accion para identificar_peligros_entorno
+    steps:
+      - intent: ubicacion
+      - action: identificar_peligros_entorno
 
-#- rule: Saludo inicial
-#  steps:
-#  - intent: saludo
-#  - action: preguntar_nombre
+  #- rule: Saludo inicial
+  #  steps:
+  #  - intent: saludo
+  #  - action: preguntar_nombre
 
-- rule: Ataque de pánico
-  steps:
-  - intent: ataque_panico
-  - action: identificar_posibilidad_shock
+  - rule: Ataque de pánico
+    steps:
+      - intent: ataque_panico
+      - action: identificar_posibilidad_shock
 
-- rule: Evaluacion respiracion
-  steps:
-  - intent: estado_respiracion
-  - action: recopilar_estado_respiracion
+  - rule: Evaluacion respiracion
+    steps:
+      - intent: estado_respiracion
+      - action: recopilar_estado_respiracion
 
-- rule: Evaluacion circulacion
-  steps:
-  - intent: estado_circulacion
-  - action: recopilar_estado_circulacion
+  - rule: Evaluacion circulacion
+    steps:
+      - intent: estado_circulacion
+      - action: recopilar_estado_circulacion
 
-- rule: Evaluacion neurologico
-  steps:
-  - intent: estado_neurologico
-  - action: recopilar_estado_neurologico
+  - rule: Evaluacion neurologico
+    steps:
+      - intent: estado_neurologico
+      - action: recopilar_estado_neurologico
 
-#- rule: Contacto emergencia
-#  steps:
-#  - intent: solicitar_contacto_emergencia
-#  - action: accion_informar_contacto_emergencia
+  #- rule: Contacto emergencia
+  #  steps:
+  #  - intent: solicitar_contacto_emergencia
+  #  - action: accion_informar_contacto_emergencia
 
-- rule: datos victima
-  steps:
-  - intent: info_datos_victima
-  - action: datos_victima
+  - rule: datos victima
+    steps:
+      - intent: info_datos_victima
+      - action: datos_victima
 
-- rule: Contacto emergencia
-  steps:
-  - intent: solicitar_contacto_emergencia
-  - action: accion_informar_contacto_emergencia
+  - rule: Contacto emergencia
+    steps:
+      - intent: solicitar_contacto_emergencia
+      - action: accion_informar_contacto_emergencia
 
-- rule: afirmativo
-  steps: 
-  - intent: afirmativo
-  - action: tranquilizar_apoyar
+  - rule: afirmativo
+    steps:
+      - intent: afirmativo
+      - action: determinar_estado_general
 
-- rule: despedida
-  steps: 
-  - intent: ayuda_llego
-  - action: despedida_respuesta
+  - rule: despedida
+    steps:
+      - intent: ayuda_llego
+      - action: despedida_respuesta
